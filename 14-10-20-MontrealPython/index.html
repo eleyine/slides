@@ -1,1 +1,475 @@
-test 1 2 3
+<!doctype html>
+
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=1024" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <title>Automating FRAP data analysis using Django and Scipy | by Eleyine Zarour @eleyine</title>
+    
+    <meta name="description" content="" />
+    <meta name="author" content="Eleyine Zarour" />
+
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans:regular,semibold,italic,italicsemibold|PT+Sans:400,700,400italic,700italic|PT+Serif:400,700,400italic,700italic" rel="stylesheet" />
+
+    <link href="css/style.css" rel="stylesheet" />
+
+    <link rel="stylesheet" href="css/highlight.css">
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+    
+    
+    <link rel="shortcut icon" href="favicon.png" />
+    <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+</head>
+
+<body class="impress-not-supported">
+
+<div class="fallback-message">
+    <p>Your browser <b>doesn't support the features required</b> by impress.js, so you are presented with a simplified version of this presentation.</p>
+    <p>For the best experience please use the latest <b>Chrome</b>, <b>Safari</b> or <b>Firefox</b> browser.</p>
+</div>
+
+
+<div id="impress">
+    <div id="title" class="step slide pink" data-x="-2000" data-y="-1500">
+        <h1 class="center">Automating FRAP data analysis using <code>Django</code> and <code>Scipy</code></h1>
+        <p class="center">@eleyine</p>
+    </div>
+
+    <div id="experiment" class="step slide blue" data-x="-1000" data-y="-1500">
+        <div class="subtitle"><p><number>01</number> The Experiment </p></div>
+        <q>What is <b>FRAP</b> anyway?</q>
+        <div class="center">
+        <video width="400" height="300" controls>
+          <source src="mov/frap.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+        </video>
+        </div>
+    </div>
+
+    <div id="collection" class="step slide indigo" data-x="0" data-y="-1500">
+        <div class="subtitle"><p><number>02</number> Data Collection </p></div>
+        <div class="img-wrap">
+        <img class="center" src="img/regions.jpg" alt="So much time wasted collecting this stuff." height="500" width="500">
+        </div>
+        
+    </div>
+
+
+ <!--    <div class="step slide" data-x="0" data-y="-1500">
+        <q>Don't you think that presentations given <strong>in modern browsers</strong> shouldn't <strong>copy the limits</strong> of 'classic' slide decks?</q>
+    </div> -->
+
+    <div id="numbers" class="step" data-x="0" data-y="-500" data-z="-1000" data-scale="2">
+        <div class="img-wrap">
+        <img class="center" src="img/numbers.png" alt="So much time wasted collecting this stuff." width="650">
+        </div>
+    </div> 
+    <div id="more-numbers" class="step" data-x="2500" data-y="-500" data-z="2000" data-scale="2">
+        <q class="big"> x 369 <small>and counting!</small> </q>
+        <div class="comment">Do you keep them all in one Excel file?</div>
+        <div class="comment"><small>369 sheets, the horror.</small></div>
+    </div> 
+    <div id="meta-data" class="step slide blue" data-x="1500" data-y="-5000" data-z="4000" data-scale="4">
+        <div class="subtitle"><p><number>04</number> More Problems </p></div>
+        <q class="center"> I also need to keep track of meta data</q>
+        <ul type="square">
+        <li> Date: <span class="muted">one sheet per date?</span class="muted"></li>
+        <li> Mutant: <span class="muted">one file per mutant? </span class="muted"></li>
+        <li> Type of FRAP </li>
+        <li> ... and many more</li>
+        </ul>
+        <div class="help muted">halp</div>
+    </div> 
+    <div id="raw-data" class="step" data-x="1500" data-y="-10000" data-rotate="0" data-z="7000" data-scale="7">
+        <q class="big"> And, what if I change the way I analyse this raw data?</q>
+        <div class="comment">Do I have to change +369 formulae on Excel?</div>
+    </div> 
+    <div id="meaning" class="step" data-x="5500" data-y="-10000" data-rotate="0" data-z="7000" data-scale="7">
+        <div class="img-wrap">
+        <img class="center" src="img/meaning.png" alt="So much time wasted collecting this stuff." height="500" width="500">
+        </div>
+    </div> 
+    <div id="django" class="step" data-x="5500" data-y="-6000" data-rotate="0" data-z="7000" data-scale="7" data-rotate-x="-90" data-rotate-y="0" data-scale="2">
+        <div class="img-wrap">
+        <img class="center" src="img/django.jpg" alt="So much time wasted collecting this stuff." height="600" width="800">
+        </div>
+    </div> 
+    <div class="step slide green" data-x="12500" data-y="-6000" data-rotate="0" data-z="7000" data-scale="2" data-rotate-x="-90" data-rotate-y="0" data-scale="2">
+            <div class="subtitle"><p><number>04</number> Why use Django? </p></div>
+            <q>It is written in <b>Python</b>.</q>
+            <ul>
+            <li>Readable and expressive.</li>
+            <li>Open-source, stable and portable.</li>
+            <li>Wide array of scientific libraries and packages.</li>
+            </ul>
+
+    </div>
+    <div class="step slide purple" data-x="14500" data-y="-6000" data-rotate="0" data-z="7000" data-scale="2" data-rotate-x="-90" data-rotate-y="0" data-scale="2">
+    <div class="subtitle"><p><number>04</number> Why use Django? </p></div>
+            <q>It is an MTV framework.</q>
+            <ul>
+            <li>Models <span class="muted">: abstract representations of data.</span></li>
+            <li>Templates <span class="muted">: how data is presented.</span></li>
+            <li>Views <span class="muted">: which data is presented.</span></li>
+            </ul>
+    </div>
+        <div id="movie" class="step slide" data-x="16500" data-y="-6000" data-rotate="0" data-z="7000" data-scale="2" data-rotate-x="-90" data-rotate-y="0" data-scale="2">
+        <q>Example Model</q>
+    <pre>
+    <code class="hljs python">
+class FRAPMovie(models.Model):
+    class Meta:
+        unique_together = ['mutant', 'clone', 'category']
+        ordering = ['category', 'mutant', 'clone']
+
+    CATEGORIES = (
+        ('E', 'Export'),
+        ('I', 'Import')
+    )
+    category = models.CharField(max_length=1, choices=CATEGORIES, default='I')
+    mutant = models.ForeignKey('Mutant', related_name='movies')
+
+    # meta data
+    clone = models.IntegerField()
+    filename = models.CharField(max_length=20)
+    date = models.DateField()
+    notes = models.TextField(default="No notes provided.")
+
+    </code>
+    </pre>
+    </div> 
+    <div id="movie-continued" class="step slide" data-x="18500" data-y="-6000" data-rotate="0" data-z="7000" data-scale="2" data-rotate-x="-90" data-rotate-y="0" data-scale="2">
+    <pre>
+    <code class="hljs python">
+class FRAPMovie(models.Model): # continued...
+
+    # frame-related info
+    bleached_frame_index = models.IntegerField(default=22, 
+        help_text='Provide the plane number of the timeframe right before' 
+        'the bleach i.e. just before the ratio makes a big jump')
+    bleached_frame_number = models.IntegerField(default=2,
+        help_text='Provide the number of bleached frames.')
+    baseline_frame_number = models.IntegerField(default=2,
+        help_text='Provide the number of frames immediately following the '
+        'photobleaching whose average intensity should be normalised to 0.')
+
+    # boolean switches
+    is_modified = models.BooleanField(default=False)
+    is_valid = models.BooleanField(default=True)
+    is_visible = models.BooleanField(default=True)
+
+    # normalisation-related variables
+    ceiling = models.FloatField(default=-1)
+    baseline = models.FloatField(default=-1)
+    
+    </code>
+    </pre>
+    </div> 
+    <div id="template" class="step slide" data-x="20500" data-y="-6000" data-rotate="0" data-z="7000" data-scale="2" data-rotate-x="-90" data-rotate-y="0" data-scale="2">
+    <q> Example Template </q>
+    <pre>
+    <code class="hljs xml">
+    &lt;table&gt;
+        &lt;tr&gt;
+                   &lt;th&gt;Date&lt;/th&gt;    
+                   &lt;th&gt;Category&lt;/th&gt;
+                   &lt;th&gt;Mutant&lt;/th&gt;
+                   &lt;th&gt;Clone&lt;/th&gt;
+                   &lt;th   &gt;Description&lt;/th&gt;
+              &lt;/tr&gt;
+          &lt;tbody&gt;
+              {% for movie   in    movies %}
+                 &lt;tr"&gt;
+                   &lt;td&gt;{{movie.date}}&lt;/td&gt;
+                   &lt;td&gt;{{movie.get_category_display}}&lt;/td&gt;
+                   &lt;td&gt;{{movie.mutant.name}}&lt;/td&gt;
+                   &lt;td&gt;{{movie.clone}}&lt;/td&gt;
+                   &lt;td&gt;{{movie.notes}}&lt;/td&gt;
+                 &lt;/tr&gt;
+              {% endfor  %}
+          &lt;/tbody&gt;
+         &lt;/table&gt;
+    </code>
+    </pre>
+    </div>
+
+    <div class="step slide blue" data-x="14500" data-y="-6000" data-rotate="0" data-z="5500" data-scale="2" data-rotate-x="-90" data-rotate-y="0" data-scale="2">
+    <div class="subtitle"><p><number>04</number> Why use Django? </p></div>
+            <q>Easy Database Management </q>
+            <ul>
+            <li> No need to worry about mastering SQL or know a great deal of HTTP or XML syntax.</span></li>
+            <li> Django Administration interface.</span></li>
+            </ul>
+    </div>
+    <div id="mutation" class="step slide" data-x="16500" data-y="-6000" data-rotate="0" data-z="5500" data-scale="2" data-rotate-x="-90" data-rotate-y="0" data-scale="2">
+    <q>Example Model</q>
+    <pre>
+    <code class="hljs python">
+    class Mutation (models.Model):
+        class Meta:
+            ordering = ['name']
+
+        name = models.CharField(max_length=12, unique=True)
+        position = models.IntegerField(help_text='Position of 
+            the mutated codon in the DNA sequence.')
+        original_codon = models.CharField(max_length=3)
+        mutated_codon = models.CharField(max_length=3)
+
+        def get_plasmid_position(self):
+            return self.position + PLASMID_SHIFT
+
+        def __unicode__(self):
+            return '%s: %s->%s at %i (%i)'  % (self.name, 
+                self.original_codon, self.mutated_codon,
+                self.position, self.get_plasmid_position())
+    </code>
+    </pre>
+    </div> 
+    <div id="mutant" class="step slide" data-x="18500" data-y="-6000" data-rotate="0" data-z="5500" data-scale="2" data-rotate-x="-90" data-rotate-y="0" data-scale="2">
+    <pre>
+    <code class="hljs python">
+    class Mutant(models.Model):
+        class Meta:
+            ordering = ['name']
+
+        name = models.CharField(max_length=20) 
+        mutations = models.ManyToManyField('Mutation', 
+            related_name='mutants')
+        description = models.TextField(max_length=1000, 
+            default='No description provided.')
+
+        def get_name(self):
+            return '-'.join([m.name for m in self.mutations.all()])
+
+        @property
+        def n_import_movies(self):
+            n_movies = FRAPMovie.objects.filter(mutant=self)
+                .filter(category='I')
+                .filter(is_valid=True).count()
+            return n_movies
+    </code>
+    </pre>
+    </div>
+    <div id="show-movies" class="step slide" data-x="20500" data-y="-6000" data-rotate="0" data-z="5500" data-rotate-x="-90" data-rotate-y="0" data-scale="2">
+    <q> Example View</q>
+    <pre>
+    <code class="hljs python"> 
+    def show_movies(request):
+        movies = FRAPMovie.objects.all()
+        context = {
+            'movies': movies
+        }
+        return render(request, 'movies/all.html', context)
+    </code>
+    </pre>
+    </div>
+
+    <div id="demo" class="step" data-x="20500" data-y="-6000" data-rotate="0" data-z="3500" data-scale="2" data-rotate-x="-180" data-rotate-y="0" data-scale="8">
+    <div class="muted"><q>Enough code,</q></div>
+    <div><q class="big pink">demo time!</q></div>
+    <div class="muted links">
+        <a href="http://127.0.0.1:8000/admin/">Admin</a>,
+        <a href="http://127.0.0.1:8000/bcat/movies/">Movies</a>,
+        <a href="http://127.0.0.1:8000/bcat/movies/60/">Curve Fitting</a>,
+        <a href="http://127.0.0.1:8000/bcat/mutants/12/import">Mutant</a>,
+        <a href="http://127.0.0.1:8000/bcat/mutants/summary/import">Summary</a> 
+    </div>
+    </div>
+
+    <div id ="scipy-title" class="step slide pink" data-x="14500" data-y="-6000" data-rotate="0" data-z="3500" data-scale="2" data-rotate-x="-90" data-rotate-y="0" data-scale="2">
+    <q class="center">Fitting Curves with <code>Scipy</code></q>
+    <pre>
+    <code class="hljs python"> 
+    def two_phase_association(X, 
+        plateau=0, k_fast=0, k_slow=0, percent_fast=0, Y0=0):        
+        span_slow=(plateau-Y0)* (100-percent_fast)*0.01
+        span_fast=(plateau-Y0)* percent_fast *0.01
+        Y = Y0 
+            + span_fast * (1 - np.exp(-k_fast * X)) 
+            + span_slow * (1 - np.exp(-k_slow * X))
+        return Y
+
+    def residuals(p, y, x):
+        # plateau, k_fast, k_slow, percent_fast, y0 = p
+        return y - two_phase_association(x, *p)
+    </code>
+    </pre>
+    </div>
+
+    <div id ="curve-fit" class="step slide pink" data-x="16500" data-y="-6000" data-rotate="0" data-z="3500" data-scale="2" data-rotate-x="-90" data-rotate-y="0" data-scale="2">
+    <q class="center">How to use <code>leastsq</code></q>
+    <pre>
+    <code class="hljs python"> 
+    # from scipy.optimize import leastsq
+
+    def fit_parameters(self):
+        series = self.normalised_series
+        x_data = np.array([s[0] for s in series])
+        y_data = np.array([s[1] for s in series])
+        guess = self.guess_parameters
+        popt, _ = leastsq(residuals, 
+            guess, args=(y_data, x_data))
+        self.plateau, self.k_fast, self.k_slow, self.percent_fast = 
+            tuple([float(i) for i in popt])
+        </code>
+        </pre>
+    </div>
+    <div id ="yay-automation" class="step" data-x="16500" data-y="-8000" data-rotate="0" data-z="3500" data-scale="2" data-rotate-x="-180" data-rotate-y="0" data-scale="1">
+    <q>Automation is awesome! But...</q>
+    </div>
+    <div id ="automation" class="step" data-x="16500" data-y="-10000" data-rotate="0" data-z="3500" data-scale="2" data-rotate-x="-180" data-rotate-y="0" data-scale="1">
+    <div class="subtitle"><p>Make sure it's worth the effort! </p></div>
+        <div class="img-wrap">
+        <img class="center" src="img/automation.png" alt="So much time wasted collecting this stuff." height="500" width="500">
+        </div>
+    </div>
+    <div id ="thanks" class="step slide teal" data-x="19500" data-y="-10000" data-rotate="0" data-z="3500" data-scale="2" data-rotate-x="-180" data-rotate-y="0" data-scale="1">
+    <q class="big">Thanks!</q>
+    <div class="muted author"><q><i class="fa fa-twitter"></i> <i class="fa fa-github"></i> @eleyine</q>
+    </div>
+
+    </div>
+    <!-- <div id="overview" class="step" data-x="5500" data-y="-6000" data-rotate="0" data-z="7000" data-rotate-x="-90" data-rotate-y="0" data-scale="30">
+    </div> -->
+
+
+
+
+
+
+    <!--
+        
+        This is an example of step element being scaled.
+        
+        Again, we use a `data-` attribute, this time it's `data-scale="4"`, so it means that this
+        element will be 4 times larger than the others.
+        From presentation and transitions point of view it means, that it will have to be scaled
+        down (4 times) to make it back to it's correct size.
+        
+    -->
+    <!-- <div id="title" class="step" data-x="0" data-y="0" data-scale="4">
+        <span class="try">then you should try</span>
+        <h1>impress.js<sup>*</sup></h1>
+        <span class="footnote"><sup>*</sup> no rhyme intended</span>
+    </div> -->
+
+    <!--
+        
+        This element introduces rotation.
+        
+        Notation shouldn't be a surprise. We use `data-rotate="90"` attribute, meaning that this
+        element should be rotated by 90 degrees clockwise.
+        
+    -->
+
+    <!--
+        
+        This step here doesn't introduce anything new when it comes to data attributes, but you
+        should notice in the demo that some words of this text are being animated.
+        It's a very basic CSS transition that is applied to the elements when this step element is
+        reached.
+        
+        At the very beginning of the presentation all step elements are given the class of `future`.
+        It means that they haven't been visited yet.
+        
+        When the presentation moves to given step `future` is changed to `present` class name.
+        That's how animation on this step works - text moves when the step has `present` class.
+        
+        Finally when the step is left the `present` class is removed from the element and `past`
+        class is added.
+        
+        So basically every step element has one of three classes: `future`, `present` and `past`.
+        Only one current step has the `present` class.
+        
+    -->
+
+    <!--
+        
+        And the last one shows full power and flexibility of impress.js.
+        
+        You can not only position element in 3D, but also rotate it around any axis.
+        So this one here will get rotated by -40 degrees (40 degrees anticlockwise) around X axis and
+        10 degrees (clockwise) around Y axis.
+        
+        You can of course rotate it around Z axis with `data-rotate-z` - it has exactly the same effect
+        as `data-rotate` (these two are basically aliases).
+        
+    -->
+
+
+    <!--
+        
+        So to make a summary of all the possible attributes used to position presentation steps, we have:
+        
+        * `data-x`, `data-y`, `data-z` - they define the position of **the center** of step element on
+            the canvas in pixels; their default value is 0;
+        * `data-rotate-x`, `data-rotate-y`, 'data-rotate-z`, `data-rotate` - they define the rotation of
+            the element around given axis in degrees; their default value is 0; `data-rotate` and `data-rotate-z`
+            are exactly the same;
+        * `data-scale` - defines the scale of step element; default value is 1
+        
+        These values are used by impress.js in CSS transformation functions, so for more information consult
+        CSS transfrom docs: https://developer.mozilla.org/en/CSS/transform
+        
+    -->
+</div>
+
+<!--
+    
+    Hint is not related to impress.js in any way.
+    
+    But it can show you how to use impress.js features in creative way.
+    
+    When the presentation step is shown (selected) its element gets the class of "active" and the body element
+    gets the class based on active step id `impress-on-ID` (where ID is the step's id)... It may not be
+    so clear because of all these "ids" in previous sentence, so for example when the first step (the one with
+    the id of `bored`) is active, body element gets a class of `impress-on-bored`.
+    
+    This class is used by this hint below. Check CSS file to see how it's shown with delayed CSS animation when
+    the first step of presentation is visible for a couple of seconds.
+    
+    ...
+    
+    And when it comes to this piece of JavaScript below ... kids, don't do this at home ;)
+    It's just a quick and dirty workaround to get different hint text for touch devices.
+    In a real world it should be at least placed in separate JS file ... and the touch content should be
+    probably just hidden somewhere in HTML - not hard-coded in the script.
+    
+    Just sayin' ;)
+    
+-->
+<div class="hint">
+    <p>Use a spacebar or arrow keys to navigate</p>
+</div>
+<script>
+if ("ontouchstart" in document.documentElement) { 
+    document.querySelector(".hint").innerHTML = "<p>Tap on the left or right to navigate</p>";
+}
+</script>
+
+<!--
+    
+    Last, but not least.
+    
+    To make all described above really work, you need to include impress.js in the page.
+    I strongly encourage to minify it first.
+    
+    In here I just include full source of the script to make it more readable.
+    
+    You also need to call a `impress().init()` function to initialize impress.js presentation.
+    And you should do it in the end of your document. Not only because it's a good practice, but also
+    because it should be done when the whole document is ready.
+    Of course you can wrap it in any kind of "DOM ready" event, but I was too lazy to do so ;)
+    
+-->
+<script src="js/impress.js"></script>
+<script>impress().init();</script>
+
+
+<script src="js/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+
+</body>
+</html>
